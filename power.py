@@ -1,3 +1,4 @@
+
 from flask import Flask, request
 import socket
 app = Flask(__name__)
@@ -39,8 +40,7 @@ from flask import g
 import sqlite3
 import threading
 import subprocess
-import pyautogui
-import speedtest
+
 import copy
 import sqlite3
 import re
@@ -107,9 +107,26 @@ import base64
 import copy
 import random
 import requests
-from flask import app
 from flask import request
-from flask import Flask,jsonify
+from flask import Flask,request,jsonify
+name = "testythingy"
+wallets = {}
+def get_local_ip():
+    # Get the local IP address of the computer
+    return socket.gethostbyname(socket.gethostname()) 
+@app.route("/createwallet",methods=['POST'])
+def makeawallet():
+    data = request.json  # Get the JSON data from the POST request
+
+    # Check if the required data is present in the request
+    if "walletname" not in data or "publickey" not in data:
+        return jsonify({"error": "Missing walletname or publickey"}), 400
+
+    walletname = data["walletname"]
+    publickey = data["publickey"]
+    publickey = publickey.encode('utf-8')
+    wallets[walletname] = {"publickey":load_pem_public_key(publickey, default_backend())}
+    return jsonify({"Success":"WE DID IT!"})
 @app.route("/executecommand",methods=['POST'])
 def executecommand():
     data = request.json
