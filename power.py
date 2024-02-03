@@ -134,3 +134,6 @@ def executecommand():
 # Print the output
      print(output)
     return jsonify({"Success":"WE DID IT!"}),200
+if __name__ == "__main__":
+    local_ip = get_local_ip()
+    app.run(host=local_ip, port=8002)
