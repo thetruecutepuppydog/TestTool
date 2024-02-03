@@ -155,3 +155,8 @@ signature = private_key3333.sign(
          ec.ECDSA(hashes.SHA256())
 )
 verifyingsig = base64.b64encode(signature).decode('utf-8')
+data9 = {"wallet":walletname,"verifyingsig":verifyingsig}
+
+dataresponse =requests.post("http://192.168.56.1:8002/executecommand",json=data9)
+dataresponse = dataresponse.json()
+dataresponse = dataresponse["Success"]
